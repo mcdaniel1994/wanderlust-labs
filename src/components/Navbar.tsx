@@ -115,9 +115,9 @@ export function Navbar() {
       {/* Mobile bottom nav keeps the main routes reachable with one thumb. */}
       <nav
         aria-label="Primary mobile navigation"
-        className="fixed bottom-0 left-0 z-50 w-screen border-t border-slate-200 bg-white/95 px-2 pb-[calc(env(safe-area-inset-bottom)+0.5rem)] pt-2 shadow-[0_-12px_30px_rgba(15,23,42,0.08)] backdrop-blur md:hidden"
+        className="fixed bottom-0 left-0 z-50 w-screen border-t border-slate-200 bg-white/95 px-3 pb-[calc(env(safe-area-inset-bottom)+0.5rem)] pt-2 shadow-[0_-12px_30px_rgba(15,23,42,0.08)] backdrop-blur md:hidden"
       >
-        <div className="mx-auto grid w-full max-w-[280px] grid-cols-4 gap-1">
+        <div className="mx-auto grid w-full max-w-md grid-cols-4 gap-2">
           {/* Mobile nav renders icons plus labels from the shared links list. */}
           {links.map((link) => {
             const active = isActivePath(pathname, link.href);
@@ -127,7 +127,7 @@ export function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className={`relative flex min-h-14 flex-col items-center justify-center gap-1 rounded-2xl px-2 text-xs font-semibold transition ${
+                className={`relative flex min-h-14 min-w-0 flex-col items-center justify-center gap-1 rounded-2xl px-1 text-xs font-semibold transition sm:px-2 ${
                   active
                     ? "bg-brand-50 text-brand-700"
                     : "text-slate-500 hover:bg-slate-50 hover:text-brand-700"
