@@ -1,11 +1,16 @@
+// Centralizes Pexels image URLs so page/components can reference named photo topics.
 const pexelsPhoto = (id: number, width = 1600) =>
   `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&w=${width}`;
 
+// Site-level images are used outside individual experience cards.
 export const sitePhotos = {
+  // Home hero image sets the first impression for the product.
   hero: pexelsPhoto(8319072, 1800),
+  // Profile avatar supports the mock user profile and navbar avatar.
   profileAvatar: pexelsPhoto(3310851, 500),
 };
 
+// Category images back the five home page category tiles.
 export const categoryPhotos = {
   Adventure: pexelsPhoto(20042225),
   Culture: pexelsPhoto(14811116),
@@ -14,7 +19,9 @@ export const categoryPhotos = {
   Wellness: pexelsPhoto(13849048),
 };
 
+// Topic photos are the reusable image library for generated experience galleries.
 export const topicPhotos = {
+  // Adventure topics.
   adventureKayak: pexelsPhoto(7276720),
   adventureGlacier: pexelsPhoto(29084576),
   adventureVolcano: pexelsPhoto(18502690),
@@ -31,6 +38,7 @@ export const topicPhotos = {
   adventureTableMountain: pexelsPhoto(22798567),
   adventureSnowFjord: pexelsPhoto(29304847),
   adventureDolomites: pexelsPhoto(33343534),
+  // Culture topics.
   cultureTea: pexelsPhoto(29518256),
   cultureArtisan: pexelsPhoto(37256277),
   cultureMosaic: pexelsPhoto(29370128),
@@ -52,6 +60,7 @@ export const topicPhotos = {
   cultureJaipurBlock: pexelsPhoto(28389703),
   cultureNewOrleansJazz: pexelsPhoto(21771322),
   cultureOaxacaTextile: pexelsPhoto(33397180),
+  // Food topics.
   foodBangkokNoodles: pexelsPhoto(27860371),
   foodPizza: pexelsPhoto(13946695),
   foodCeviche: pexelsPhoto(33432683),
@@ -63,12 +72,14 @@ export const topicPhotos = {
   foodTacos: pexelsPhoto(28558349),
   foodAsado: pexelsPhoto(37049907),
   foodTextilesMarket: pexelsPhoto(12295679),
+  // Wellness topics.
   wellnessYoga: pexelsPhoto(13849048),
   wellnessLagoon: pexelsPhoto(20955080),
   wellnessSpa: pexelsPhoto(27925502),
   wellnessForest: pexelsPhoto(5769708),
   wellnessCoastal: pexelsPhoto(35562665),
   wellnessRiceFields: pexelsPhoto(10804653),
+  // Nature topics.
   natureAmazon: pexelsPhoto(235734),
   natureGlacier: pexelsPhoto(27837721),
   natureSafari: pexelsPhoto(8150758),

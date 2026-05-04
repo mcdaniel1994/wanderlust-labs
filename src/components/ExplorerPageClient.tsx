@@ -10,8 +10,11 @@ import { experiences } from "@/data/experiences";
 import { useExperiences } from "@/hooks/useExperiences";
 import { useFilters } from "@/hooks/useFilters";
 
+// Client component owns the interactive explorer UI: search, filters, count, and results.
 export function ExplorerPageClient() {
+  // Query-string filters are the source of truth, which makes explorer links shareable.
   const filters = useFilters();
+  // Filtered results are recomputed from local data whenever URL-backed filters change.
   const filteredExperiences = useExperiences({
     search: filters.search,
     category: filters.category,
@@ -19,6 +22,7 @@ export function ExplorerPageClient() {
   });
 
   const destinations = useMemo(
+    // Build the destination dropdown from the catalog so it stays current when data changes.
     () =>
       Array.from(new Set(experiences.map((experience) => experience.destination)))
         .sort((a, b) => a.localeCompare(b)),
@@ -27,6 +31,7 @@ export function ExplorerPageClient() {
 
   return (
     <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-12 lg:px-8">
+      {/* Header shows where the user is and how many catalog records currently match. */}
       <div className="mb-8 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <p className="text-sm font-semibold uppercase tracking-wide text-brand-700">
@@ -41,6 +46,7 @@ export function ExplorerPageClient() {
         </p>
       </div>
 
+      {/* SearchBar and FilterBar are controlled by URL state through useFilters. */}
       <div className="space-y-4">
         <SearchBar
           key={filters.search}
@@ -57,6 +63,7 @@ export function ExplorerPageClient() {
       </div>
 
       <div className="mt-8">
+        {/* Results branch switches between the shared grid and a clear-filters empty state. */}
         {filteredExperiences.length > 0 ? (
           <ExperienceGrid experiences={filteredExperiences} />
         ) : (

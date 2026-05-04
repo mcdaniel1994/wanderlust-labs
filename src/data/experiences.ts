@@ -1,17 +1,21 @@
 import { topicPhotos } from "@/data/photos";
 import type { Experience } from "@/types/experience";
 
+// Raw records omit generated image fields so the content list stays easier to scan/edit.
 type RawExperience = Omit<Experience, "detailImageUrl" | "galleryImageUrls">;
 
 function includesAny(value: string, keywords: string[]) {
+  // Small helper for routing titles/destinations to topic-specific image sets.
   return keywords.some((keyword) => value.includes(keyword));
 }
 
 function uniquePhotos(photos: string[]) {
+  // Remove duplicates before filling galleries so each detail page feels varied.
   return Array.from(new Set(photos));
 }
 
 function photoSet(photos: string[], minimumLength = 6) {
+  // Ensure each experience has enough images for one cover plus the detail gallery.
   const uniquePhotoSet = uniquePhotos(photos);
   const filledPhotos = [...uniquePhotoSet];
 
@@ -25,6 +29,7 @@ function photoSet(photos: string[], minimumLength = 6) {
 }
 
 function scopedPhoto(photoUrl: string, scope: string, width: number) {
+  // Scope and crop params give each card/detail/gallery image a stable cropped variant.
   const url = new URL(photoUrl);
 
   url.searchParams.set("w", String(width));
@@ -36,8 +41,10 @@ function scopedPhoto(photoUrl: string, scope: string, width: number) {
 }
 
 function getExperienceGallery(experience: RawExperience) {
+  // Match each catalog item to a small themed gallery using category plus title keywords.
   const topic = `${experience.title} ${experience.destination}`.toLowerCase();
 
+  // Adventure records branch first because they have the most terrain/activity-specific imagery.
   if (experience.category === "Adventure") {
     if (includesAny(topic, ["rafting", "rapids"])) {
       return photoSet([
@@ -142,6 +149,7 @@ function getExperienceGallery(experience: RawExperience) {
     ]);
   }
 
+  // Culture records are matched to landmarks, workshops, city walks, and arts scenes.
   if (experience.category === "Culture") {
     if (includesAny(topic, ["tea ceremony", "kyoto tea"])) {
       return photoSet([
@@ -282,6 +290,7 @@ function getExperienceGallery(experience: RawExperience) {
     ]);
   }
 
+  // Food records focus on market, cooking, tasting, and cuisine-specific visuals.
   if (experience.category === "Food") {
     if (topic.includes("pizza")) {
       return photoSet([topicPhotos.foodPizza]);
@@ -359,6 +368,7 @@ function getExperienceGallery(experience: RawExperience) {
     ]);
   }
 
+  // Wellness records reuse calm nature/spa/yoga imagery without implying medical services.
   if (experience.category === "Wellness") {
     if (topic.includes("lagoon")) {
       return photoSet([
@@ -430,6 +440,7 @@ function getExperienceGallery(experience: RawExperience) {
     ]);
   }
 
+  // Remaining records are Nature experiences, matched by ecosystem or signature landscape.
   if (includesAny(topic, ["amazon", "river"])) {
     return photoSet([
       topicPhotos.natureAmazon,
@@ -548,6 +559,7 @@ function getExperienceGallery(experience: RawExperience) {
     ]);
   }
 
+  // Nature fallback keeps any future nature record from rendering without images.
   return photoSet([
     topicPhotos.natureLake,
     topicPhotos.natureRainforest,
@@ -556,7 +568,9 @@ function getExperienceGallery(experience: RawExperience) {
   ]);
 }
 
+// Raw records keep content readable; image fields are generated below from topic photos.
 const rawExperiences = [
+  // Adventure catalog records.
   {
     id: "exp-001",
     title: "Kayak & Cave Tour",
@@ -777,6 +791,7 @@ const rawExperiences = [
     rating: 4.9,
     imageUrl: "",
   },
+  // Culture catalog records.
   {
     id: "exp-021",
     title: "Kyoto Tea Ceremony",
@@ -997,6 +1012,7 @@ const rawExperiences = [
     rating: 4.8,
     imageUrl: "",
   },
+  // Food catalog records.
   {
     id: "exp-041",
     title: "Bangkok Street Food Crawl",
@@ -1217,6 +1233,7 @@ const rawExperiences = [
     rating: 4.8,
     imageUrl: "",
   },
+  // Wellness catalog records.
   {
     id: "exp-061",
     title: "Ubud Morning Yoga Flow",
@@ -1437,6 +1454,7 @@ const rawExperiences = [
     rating: 4.6,
     imageUrl: "",
   },
+  // Nature catalog records.
   {
     id: "exp-081",
     title: "Amazon River Wildlife Cruise",
@@ -1660,6 +1678,7 @@ const rawExperiences = [
 ] satisfies RawExperience[];
 
 export const experiences: Experience[] = rawExperiences.map((experience) => {
+  // Expand each raw item into the full Experience shape consumed by the UI.
   const [coverPhoto, ...galleryPhotos] = getExperienceGallery(experience);
 
   return {

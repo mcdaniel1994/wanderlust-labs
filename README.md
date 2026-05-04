@@ -4,6 +4,14 @@ Wanderlust Labs is a frontend MVP for a travel-tech experience explorer. The pro
 
 The app is intentionally scoped as a discovery UI, not a booking platform. There is no checkout, authentication, payment flow, availability calendar, or backend data source.
 
+## Live Demo
+
+https://wanderlust-labs.vercel.app/
+
+## 📌 This Project
+
+A project built during the AI Engineering program at 4Geeks Academy. [![4Geeks Academy](https://img.shields.io/badge/AI%20Engineering-4Geeks%20Academy-orange)](https://4geeksacademy.com/)
+
 ## Chosen UI Direction
 
 The selected design direction is **Concept 2 — Simplified MVP Experience Explorer**: a clean, modern, image-forward marketplace UI with soft teal branding, white card surfaces, rounded corners, subtle shadows, and clear search/filter controls.
@@ -68,3 +76,14 @@ The experience catalog lives in `src/data/experiences.ts` and contains 100 local
 ## Project Scope
 
 Build the discovery experience only. Do not add checkout, bookings, payments, authentication, databases, real accounts, external travel APIs, maps, calendars, traveler counters, reviews, or notification functionality.
+
+## 👋 About Me
+
+**Cory McDaniel**  
+AI Engineer - Dallas-Fort Worth, TX
+
+Former controls engineer. Now building AI systems that help small businesses save time through automation.
+
+- [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/corymcdanielai/)
+- 📧 corymcdaniel01@gmail.com
+- 📍 Dallas-Fort Worth, TX

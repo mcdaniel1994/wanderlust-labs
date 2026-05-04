@@ -8,11 +8,13 @@ import { experiences } from "@/data/experiences";
 import { sitePhotos } from "@/data/photos";
 import { useFavorites } from "@/hooks/useFavorites";
 
+// Static profile stats keep the MVP looking complete without a real account backend.
 const stats = [
   { label: "Explored destinations", value: "12" },
   { label: "Experiences explored", value: "18" },
 ];
 
+// Highlight cards describe the mock travel persona shown on the profile page.
 const highlights = [
   { label: "Top category", value: "Adventure", icon: Mountain },
   { label: "Most explored region", value: "Asia", icon: MapPin },
@@ -20,18 +22,23 @@ const highlights = [
 ];
 
 export default function ProfilePage() {
+  // The only live profile data is the session favorites state.
   const { favorites, count } = useFavorites();
+  // Reverse the saved id list so the profile can show the newest saved experiences first.
   const recentlySaved = favorites
     .slice()
     .reverse()
     .map((id) => experiences.find((experience) => experience.id === id))
+    // Drop ids that no longer exist if the local catalog is edited.
     .filter((experience): experience is (typeof experiences)[number] =>
       Boolean(experience),
     )
+    // Keep this section compact so it feels like a profile preview, not a second favorites page.
     .slice(0, 4);
 
   return (
     <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-12 lg:px-8">
+      {/* Mock user identity card: avatar, handle, location, and short bio. */}
       <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
         <div className="flex flex-col gap-6 sm:flex-row sm:items-center">
           <div className="relative h-28 w-28 flex-none overflow-hidden rounded-full border-4 border-brand-50 bg-slate-100">
@@ -67,6 +74,7 @@ export default function ProfilePage() {
         </div>
       </div>
 
+      {/* Summary stats combine the live favorites count with static profile metrics. */}
       <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
         <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
           <div className="flex items-center justify-between gap-3">
@@ -88,6 +96,7 @@ export default function ProfilePage() {
         ))}
       </div>
 
+      {/* Persona highlights give the profile page useful visual structure. */}
       <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-3">
         {highlights.map((highlight) => {
           const Icon = highlight.icon;
@@ -111,6 +120,7 @@ export default function ProfilePage() {
         })}
       </div>
 
+      {/* Recently saved appears only after the user has favorited at least one item. */}
       {recentlySaved.length > 0 ? (
         <div className="mt-12">
           <h2 className="mb-6 text-2xl font-bold tracking-tight text-slate-950">

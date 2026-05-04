@@ -9,6 +9,7 @@ import { useState } from "react";
 import { sitePhotos } from "@/data/photos";
 import { useFavorites } from "@/hooks/useFavorites";
 
+// One link list feeds both desktop and mobile navigation so labels/routes stay aligned.
 const links = [
   { href: "/", label: "Home", icon: Home },
   { href: "/experiences", label: "Explorer", icon: Search },
@@ -16,7 +17,9 @@ const links = [
   { href: "/profile", label: "Profile", icon: User },
 ];
 
+// Shared active-route helper is used by both desktop and mobile nav renders.
 function isActivePath(pathname: string, href: string) {
+  // Home should only be active at "/", while nested routes keep their parent nav item active.
   if (href === "/") {
     return pathname === "/";
   }
@@ -25,12 +28,16 @@ function isActivePath(pathname: string, href: string) {
 }
 
 export function Navbar() {
+  // pathname drives active nav styling for top nav and bottom mobile nav.
   const pathname = usePathname();
+  // count powers the favorites badges in both nav layouts.
   const { count } = useFavorites();
+  // Notifications are a local demo-only modal, not connected to backend data.
   const [showNotifications, setShowNotifications] = useState(false);
 
   return (
     <>
+      {/* Desktop/tablet sticky header with brand, center nav, and profile controls. */}
       <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/95 backdrop-blur">
         <nav className="mx-auto flex w-screen max-w-7xl items-center gap-4 px-4 py-3 sm:px-6 lg:px-8">
           <Link
@@ -47,6 +54,7 @@ export function Navbar() {
           </Link>
 
           <div className="hidden flex-1 items-center justify-center gap-2 md:flex">
+            {/* Desktop nav text links share the same route definitions as mobile icons. */}
             {links.map((link) => {
               const active = isActivePath(pathname, link.href);
 
@@ -74,6 +82,7 @@ export function Navbar() {
             })}
           </div>
 
+          {/* Right-side actions stay visible even when the center nav hides on mobile. */}
           <div className="ml-auto flex items-center gap-3 md:ml-0">
             <button
               type="button"
@@ -103,11 +112,13 @@ export function Navbar() {
         </nav>
       </header>
 
+      {/* Mobile bottom nav keeps the main routes reachable with one thumb. */}
       <nav
         aria-label="Primary mobile navigation"
         className="fixed bottom-0 left-0 z-50 w-screen border-t border-slate-200 bg-white/95 px-2 pb-[calc(env(safe-area-inset-bottom)+0.5rem)] pt-2 shadow-[0_-12px_30px_rgba(15,23,42,0.08)] backdrop-blur md:hidden"
       >
         <div className="mx-auto grid w-full max-w-[280px] grid-cols-4 gap-1">
+          {/* Mobile nav renders icons plus labels from the shared links list. */}
           {links.map((link) => {
             const active = isActivePath(pathname, link.href);
             const Icon = link.icon;
@@ -144,6 +155,7 @@ export function Navbar() {
         </div>
       </nav>
 
+      {/* Demo notification dialog: opened from the bell, dismissed by backdrop or X. */}
       {showNotifications ? (
         <div
           className="fixed inset-0 z-[70] flex items-start justify-center bg-slate-950/20 px-4 pt-20 backdrop-blur-sm"

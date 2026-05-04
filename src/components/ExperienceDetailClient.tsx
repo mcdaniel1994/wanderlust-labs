@@ -8,11 +8,14 @@ import { useEffect } from "react";
 import { useFavorites } from "@/hooks/useFavorites";
 import type { Experience } from "@/types/experience";
 
+// Detail page receives a fully-expanded Experience from the route file.
 interface ExperienceDetailClientProps {
   experience: Experience;
 }
 
+// Highlight data is static because this MVP has no schedule, capacity, or booking backend.
 const highlights = [
+  // Static MVP highlights keep the detail page complete without needing booking data.
   { label: "Duration", value: "4-5 hours", icon: Clock3 },
   { label: "Small group", value: "Max 12 people", icon: Users },
   { label: "Beginner friendly", value: "No experience needed", icon: Target },
@@ -22,15 +25,18 @@ const highlights = [
 export function ExperienceDetailClient({
   experience,
 }: ExperienceDetailClientProps) {
+  // Favorites context lets this page share the same saved state as cards and nav badges.
   const { isFavorite, toggleFavorite } = useFavorites();
   const saved = isFavorite(experience.id);
 
   useEffect(() => {
+    // The route is client-rendered so the browser title is updated from the selected record.
     document.title = `${experience.title} | Wanderlust Labs`;
   }, [experience.title]);
 
   return (
     <section className="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-10 lg:px-8">
+      {/* Top bar keeps navigation and save action available before the hero image. */}
       <div className="mb-6 flex items-center justify-between gap-4">
         <Link
           href="/experiences"
@@ -55,6 +61,7 @@ export function ExperienceDetailClient({
         </button>
       </div>
 
+      {/* Main image uses the generated detailImageUrl for a wider crop than cards. */}
       <div className="relative aspect-[16/9] overflow-hidden rounded-3xl bg-slate-200 shadow-card">
         <Image
           src={experience.detailImageUrl}
@@ -67,6 +74,7 @@ export function ExperienceDetailClient({
         />
       </div>
 
+      {/* Gallery previews use the remaining generated images for visual depth. */}
       <div className="mt-4 grid grid-cols-4 gap-3">
         {experience.galleryImageUrls.map((imageUrl, index) => (
           <div
@@ -85,6 +93,7 @@ export function ExperienceDetailClient({
         ))}
       </div>
 
+      {/* Title/meta area is split from the rating/price summary on wide screens. */}
       <div className="mt-10 grid gap-6 lg:grid-cols-[1fr_auto] lg:items-start">
         <div>
           <p className="text-sm font-semibold uppercase tracking-wide text-brand-700">
@@ -97,6 +106,7 @@ export function ExperienceDetailClient({
             {experience.destination} · {experience.category}
           </p>
         </div>
+        {/* Summary card mimics marketplace detail pages without adding checkout. */}
         <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm lg:min-w-56">
           <div className="flex items-center gap-2 text-sm font-semibold text-slate-700">
             <Star className="h-5 w-5 fill-amber-400 text-amber-400" />
@@ -109,10 +119,12 @@ export function ExperienceDetailClient({
         </div>
       </div>
 
+      {/* Long-form description is kept below the scannable summary content. */}
       <p className="mt-8 max-w-3xl text-lg leading-8 text-slate-600">
         {experience.description}
       </p>
 
+      {/* Static highlights fill out the experience details while staying inside MVP scope. */}
       <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {highlights.map((highlight) => {
           const Icon = highlight.icon;

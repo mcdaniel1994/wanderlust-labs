@@ -1,21 +1,26 @@
+/* Pull in Tailwind's base reset, component layer, and utility classes. */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* The whole app is designed as a light marketplace UI. */
 :root {
   color-scheme: light;
 }
 
+/* Predictable sizing keeps card grids and fixed nav elements from overflowing. */
 * {
   box-sizing: border-box;
 }
 
+/* Prevent horizontal scrolling from full-width mobile/desktop navigation. */
 html {
   max-width: 100%;
   overflow-x: hidden;
   scroll-behavior: smooth;
 }
 
+/* Global page surface and font stack used by every route. */
 body {
   min-height: 100vh;
   max-width: 100%;
@@ -27,11 +32,13 @@ body {
     sans-serif;
 }
 
+/* Links inherit surrounding text styles unless a component adds its own treatment. */
 a {
   color: inherit;
   text-decoration: none;
 }
 
+/* Form controls use the same font as the rest of the app. */
 button,
 input,
 select {
