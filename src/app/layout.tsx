@@ -21,8 +21,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <FavoritesProvider>
           {/* Navbar appears on every route and reads the global favorites count. */}
           <Navbar />
-          {/* Bottom padding leaves room for the fixed mobile nav; desktop does not need it. */}
-          <main className="pb-24 md:pb-0">{children}</main>
+          {/* Padding leaves room for fixed navigation on mobile and desktop. */}
+          <main className="pb-24 md:pb-0 md:pt-[65px]">{children}</main>
         </FavoritesProvider>
       </body>
     </html>

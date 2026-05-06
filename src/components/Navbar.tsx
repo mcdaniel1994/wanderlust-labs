@@ -37,8 +37,8 @@ export function Navbar() {
 
   return (
     <>
-      {/* Desktop/tablet sticky header with brand, center nav, and profile controls. */}
-      <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/95 backdrop-blur">
+      {/* Desktop/tablet fixed header with brand, center nav, and profile controls. */}
+      <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/95 backdrop-blur md:fixed md:inset-x-0">
         <nav className="mx-auto flex w-screen max-w-7xl items-center gap-4 px-4 py-3 sm:px-6 lg:px-8">
           <Link
             href="/"
